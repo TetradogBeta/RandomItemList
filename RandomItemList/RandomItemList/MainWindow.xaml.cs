@@ -21,29 +21,53 @@ namespace RandomItemList
     public partial class MainWindow : Window
     {
         const char SPLITCHAR = ';';
-       
+        const string VERSION = "2.0";
         public MainWindow()
         {
             InitializeComponent();
             txtItems.Text = Properties.Settings.Default.strList;
             Random = new Random();
             tbUsoLista.Text = tbUsoLista.Text.Replace('#', SPLITCHAR);
+            LastIndex = -1;
+            LastColorIndex = 0;
+            Title = Title + VERSION;
         }
         public Random Random { get; set; }
+        public int LastIndex { get; set; }
 
+        public int LastColorIndex { get; set; }
+        public SolidColorBrush[] Colores => new SolidColorBrush[] { Brushes.Blue,Brushes.Salmon,Brushes.Violet,Brushes.Tomato,Brushes.Green };
 
         private void btnRandom_Click(object sender, RoutedEventArgs e)
         {
             string[] items;
+            int index;
             if (!string.IsNullOrEmpty(txtItems.Text))
             {
                 if (txtItems.Text.Contains(SPLITCHAR))
                 {
                     items = txtItems.Text.Split(SPLITCHAR);
-                    tbRandomItem.Text = items[Random.Next(items.Length)];
+                    index = Random.Next(items.Length);
+                    tbRandomItem.Text = items[index];
+                    if (index == LastIndex)
+                    {
+                        //cambio color letra
+                        tbRandomItem.Foreground = Colores[LastColorIndex];
+
+                        LastColorIndex = (LastColorIndex + 1) % Colores.Length;
+                    }
+                    else
+                    {
+                        //pongo colo negro
+                        tbRandomItem.Foreground = Brushes.Black;
+                    }
+                    LastIndex = index;
                 }
-                else tbRandomItem.Text = txtItems.Text;
-            }
+                else { 
+                    tbRandomItem.Text = txtItems.Text;
+                    tbRandomItem.Foreground = Brushes.Black;
+                }
+                }
             else tbRandomItem.Text = string.Empty;
         }
 

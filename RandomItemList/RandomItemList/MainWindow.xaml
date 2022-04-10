@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandomItemList"
         mc:Ignorable="d"
-        Title="Random Item List" Height="150" Width="300" Closing="Window_Closing">
+        Title="Random Item List V" Height="150" Width="345" Closing="Window_Closing">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -16,7 +16,9 @@
             
         </Grid.RowDefinitions>
         <TextBlock x:Name="tbUsoLista" Text="Usa ' # ' para separar los elementos de la lista" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBox x:Name="txtItems" Grid.Row="1"  />
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <TextBox x:Name="txtItems"  TextWrapping="Wrap" />
+        </ScrollViewer>
         <TextBlock x:Name="tbRandomItem" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Button x:Name="btnRandom" Content="Random!" Grid.Row="3" Click="btnRandom_Click"/>
     </Grid>
